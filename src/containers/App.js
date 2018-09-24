@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 
-class App extends Component {
-  /* LIFECYCLE
+class App extends PureComponent {
+  /* CREATE COMPONENTS LIFECYCLE
   1 - constructor(props)
   2 - componentWillMount()
     Exists for historic reasons
   3 - render()
     Render Child Components
   4 - componentDidMount()  
+  */
+ 
+  /* UPDATE COMPONENTS LIFECYCLE
+  1 - componentWillReceiveProps(nextProps)
+  2 - shouldComponentUpdate(nextProps, nextState)
+    If TRUE will update. Otherwise won't update
+  3 - componentWillUpdate(nextProps, nextState)
+  4 - render()
+    Update Child Component Props
+  5 - componentDidUpdate() 
   */
 
   constructor(props){
@@ -36,6 +46,14 @@ class App extends Component {
   componentDidMount(){
     console.log('[App.js] Inside componentDidMount');
   }
+
+  /*
+  shouldComponentUpdate(nextProps, nextState){
+      console.log('[UPDATE App.js] Inside souldComponentUpdate', nextProps, nextState);
+      return nextState.persons !== this.state.persons ||
+        nextState.showPersons !== this.state.showPersons;
+  }
+  */
 
   /*
   state = {
@@ -96,6 +114,7 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
+        <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
         <Cockpit 
           title={this.props.title}
           showPersons={this.state.showPersons}
