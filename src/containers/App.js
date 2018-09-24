@@ -11,11 +11,33 @@ class App extends Component {
     Exists for historic reasons
   3 - render()
     Render Child Components
-  4 - componentDidMount()
-  
+  4 - componentDidMount()  
   */
 
+  constructor(props){
+    super(props);
+    console.log('[App.js] Inside Constructor', props);
 
+    this.state = {
+      persons: [
+        {id: 1, name: 'Alex',  age: 28},
+        {id: 2, name: 'Maria',  age: 26},
+        {id: 3, name: 'Juliane',  age: 32}
+      ],
+      otherState: 'Other state',
+      showPersons: false
+    }
+  }
+
+  componentWillMount(){
+    console.log('[App.js] Inside componentWillMount');
+  }
+
+  componentDidMount(){
+    console.log('[App.js] Inside componentDidMount');
+  }
+
+  /*
   state = {
     persons: [
       {id: 1, name: 'Alex',  age: 28},
@@ -25,6 +47,7 @@ class App extends Component {
     otherState: 'Other state',
     showPersons: false
   }
+  */
 
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => p.id === id);
@@ -58,6 +81,8 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] Inside render');
+
     let persons = null;
 
     if(this.state.showPersons){
@@ -69,11 +94,10 @@ class App extends Component {
       );
     }
 
-    console.log(persons);
-
     return (
       <div className={classes.App}>
         <Cockpit 
+          title={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}/>
