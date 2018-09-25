@@ -36,7 +36,8 @@ class App extends PureComponent {
         {id: 3, name: 'Juliane',  age: 32}
       ],
       otherState: 'Other state',
-      showPersons: false
+      showPersons: false,
+      toggleClicked: 0
     }
   }
 
@@ -96,7 +97,13 @@ class App extends PureComponent {
   }
 
   togglePersonsHandler = () => {
-    this.setState({showPersons: !this.state.showPersons});
+    //If you relly on previous state, the best practice is using a function, because it runs assincronously
+    this.setState( (prevState, props) => {
+      return {
+        showPersons: !prevState.showPersons,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    });
   }
 
   render() {
