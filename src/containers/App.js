@@ -4,6 +4,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import WithClass from '../hoc/WithClass';
 
+export const AuthContext = React.createContext(false);
 
 class App extends PureComponent {
   /* CREATE COMPONENTS LIFECYCLE
@@ -121,8 +122,7 @@ class App extends PureComponent {
         <Persons
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler}
-          isAuthenticated={this.state.isAuthenticated}/>
+          changed={this.nameChangedHandler}/>
       );
     }
 
@@ -135,7 +135,9 @@ class App extends PureComponent {
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
           login={this.loginHandler}/>
-        {persons}
+        <AuthContext.Provider value={this.state.isAuthenticated}>
+          {persons}
+        </AuthContext.Provider>
         <p>{this.state.otherState}</p>
       </WithClass>
     );
