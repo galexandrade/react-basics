@@ -12,9 +12,9 @@ class App extends PureComponent {
     Exists for historic reasons
   3 - render()
     Render Child Components
-  4 - componentDidMount()  
+  4 - componentDidMount()
   */
- 
+
   /* UPDATE COMPONENTS LIFECYCLE
   1 - componentWillReceiveProps(nextProps)
   2 - shouldComponentUpdate(nextProps, nextState)
@@ -22,7 +22,7 @@ class App extends PureComponent {
   3 - componentWillUpdate(nextProps, nextState)
   4 - render()
     Update Child Component Props
-  5 - componentDidUpdate() 
+  5 - componentDidUpdate()
   */
 
   constructor(props){
@@ -37,7 +37,8 @@ class App extends PureComponent {
       ],
       otherState: 'Other state',
       showPersons: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      isAuthenticated: false
     }
   }
 
@@ -106,6 +107,10 @@ class App extends PureComponent {
     });
   }
 
+  loginHandler = () => {
+    this.setState({isAuthenticated: true});
+  };
+
   render() {
     console.log('[App.js] Inside render');
 
@@ -113,21 +118,23 @@ class App extends PureComponent {
 
     if(this.state.showPersons){
       persons = (
-        <Persons 
+        <Persons
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler}/>
+          changed={this.nameChangedHandler}
+          isAuthenticated={this.state.isAuthenticated}/>
       );
     }
 
     return (
       <WithClass classes={classes.App}>
         <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
-        <Cockpit 
+        <Cockpit
           title={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
-          clicked={this.togglePersonsHandler}/>
+          clicked={this.togglePersonsHandler}
+          login={this.loginHandler}/>
         {persons}
         <p>{this.state.otherState}</p>
       </WithClass>
